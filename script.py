@@ -9,7 +9,7 @@ import pytube
 
 # root.geometry("1000x600")
 
-# root.mainloop( TP1)
+# root.mainloop( TP2)
 
 #                            End of UI
 
