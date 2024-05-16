@@ -13,8 +13,8 @@ import pytube
 
 #                            End of UI
 
-url = str(input("Paste URL:"))
-yt  = pytube.YouTube(url)
+ url = str(input("Paste URL:"))
+ yt  = pytube.YouTube(url)
 
 vids = yt.streams.filter(file_extension='webm', type = 'audio')
 
