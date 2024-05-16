@@ -9,12 +9,12 @@ import pytube
 
 # root.geometry("1000x600")
 
-# root.mainloop( TP6)
+# root.mainloop( TP5)
 
 #                            End of UI
 
-  url = str(input("Paste URL:"))
-  yt  = pytube.YouTube(url)
+ url = str(input("Paste URL:"))
+ yt  = pytube.YouTube(url)
 
 vids = yt.streams.filter(file_extension='webm', type = 'audio')
 
