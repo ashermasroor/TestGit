@@ -1,5 +1,6 @@
 name: Lint and Commit
-on: [ push, pull_request ]
+
+on: [push, pull_request]
 
 jobs:
   lint:
@@ -7,7 +8,17 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v2
-    - uses: chartboost/ruff-action@v1
       with:
-        args: --check .
-        fix_args: --fix .
+        python-version: '3.x'  # Explicitly specify Python version
+    - name: Install Ruff
+      run: pip install ruff  # Ensure Ruff is installed in the environment
+    - name: Run Ruff Linter
+      run: ruff check --fix .  # Use ruff directly with the correct command
+    - name: Commit changes
+      if: github.ref == 'refs/heads/main'  # Only commit to main branch
+      run: |
+        git config user.name 'Your Name'
+        git config user.email 'your-email@example.com'
+        git add -A
+        git commit -m "Apply automatic RUFF fixes"
+        git push
