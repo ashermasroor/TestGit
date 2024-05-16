@@ -23,6 +23,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Ruff
+        uses: chartboost/ruff-action@v1
+        with:
+          args: 'format --check'
+
                         
 
 
