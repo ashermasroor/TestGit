@@ -1,6 +1,6 @@
 name: Lint and Commit
 
-on: [push, pull_request]
+on: push 
 
 jobs:
   lint:
@@ -15,4 +15,11 @@ jobs:
     - name: Run Ruff Linter
       run: ruff check --fix .  # Use ruff directly with the correct command
     - name: commit changes
+    if: github.ref == 'refs/heads/Dev-pull'  # Only commit to main branch
+      run: |
+        git config user.name 'Your Name'
+        git config user.email 'your-email@example.com'
+        git add -A
+        git commit -m "Apply automatic RUFF fixes"
+        git push
    
