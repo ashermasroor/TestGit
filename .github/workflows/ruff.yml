@@ -1,4 +1,4 @@
-name: Lint and Commit
+name: Lint and Create PR
 
 on: push
 
@@ -9,23 +9,42 @@ jobs:
       contents: read
       packages: read
       statuses: write
+      pull-requests: write
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v4
       with:
         python-version: '3.9'
+    - name: Install GitHub CLI
+      run: sudo apt-get install gh
     - name: Install Ruff
       run: pip install ruff
     - name: Run Ruff Linter
       run: ruff check --fix .
-    - name: Commit changes
-      if: github.ref == 'refs/heads/Dev-pull'
+    - name: Create and push branch
       env:
         GITHUB_ACTOR: ${{ github.actor }}
-        GITHUB_EMAIL: ${{ github.event.pusher.email }}
+        GITHUB_EMAIL: ${{ github.event.pusher.email || 'default-email@example.com' }}
+        GH_PAT: ${{ secrets.GH_PAT }}
       run: |
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_EMAIL}"
+        git checkout -b lint-fixes-${{ github.sha }}
         git add -A
         git commit -m "Apply automatic RUFF fixes"
-        git push
+        git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git lint-fixes-${{ github.sha }}
+    - name: Create pull request
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
+      run: |
+        pr_title="Apply automatic RUFF fixes"
+        pr_body="This pull request applies automatic fixes from the Ruff linter."
+        base_branch="Dev-Pull"
+        head_branch="lint-fixes-${{ github.sha }}"
+        gh api -H "Authorization: token $GH_PAT" \
+          -X POST \
+          -F "title=${pr_title}" \
+          -F "body=${pr_body}" \
+          -F "head=${head_branch}" \
+          -F "base=${base_branch}" \
+          https://api.github.com/repos/${{ github.repository }}/pulls
