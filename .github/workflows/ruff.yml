@@ -19,8 +19,12 @@ jobs:
         python-version: '3.9'
     - name: Install Ruff
       run: pip install ruff
-    - name: Run Ruff Linter
-      run: ruff check --fix .
+    - name: Run Ruff Linter and print errors
+      id: ruff_lint
+      run: |
+        ruff check --fix . 2>&1 | tee ruff_output.txt
+    - name: Print Ruff Linter Errors
+      run: cat ruff_output.txt
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
