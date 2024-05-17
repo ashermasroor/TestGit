@@ -12,20 +12,8 @@ from fastapi.requests import Request
 
 from pydantic import BaseModel, Field
 from typing import List
-<<<<<<< HEAD
-<<<<<<< HEAD
 import os, re, requests
 import tkinter as tk
-=======
-import os
-import re
-import requests
->>>>>>> 80adfc01b8c0b8e4361a905edda9f55e6fbffbfb
-=======
-import os
-import re
-import requests
->>>>>>> 80adfc01b8c0b8e4361a905edda9f55e6fbffbfb
 
 class RAGLlm(BaseModel):
     model_url: str | None = Field(default="http://103.251.2.10:5000")
