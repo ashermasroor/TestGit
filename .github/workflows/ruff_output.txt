@@ -1,3 +1,1 @@
-error: Failed to parse script.py:15:1: Expected a statement
-script.py:15:1: E999 SyntaxError: Expected a statement
-Found 1 error.
+Found 2 errors (2 fixed, 0 remaining).
