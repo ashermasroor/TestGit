@@ -11,7 +11,10 @@ jobs:
       statuses: write
       pull-requests: write
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: false  # We will use our own SSH key for authentication
     - uses: actions/setup-python@v4
       with:
         python-version: '3.9'
@@ -19,18 +22,23 @@ jobs:
       run: pip install ruff
     - name: Run Ruff Linter
       run: ruff check --fix .
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
     - name: Create and push branch
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_EMAIL: ${{ github.event.pusher.email || 'default-email@example.com' }}
-        GH_PAT: ${{ secrets.GH_PAT }}
       run: |
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_EMAIL}"
         git checkout -b lint-fixes-${{ github.sha }}
         git add -A
         git commit -m "Apply automatic RUFF fixes"
-        git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git lint-fixes-${{ github.sha }}
+        git push git@github.com:${{ github.repository }}.git lint-fixes-${{ github.sha }}
     - name: Install GitHub CLI
       run: sudo apt-get install -y gh
     - name: Create pull request
@@ -41,10 +49,5 @@ jobs:
         pr_body="This pull request applies automatic fixes from the Ruff linter."
         base_branch="Dev-Pull"
         head_branch="lint-fixes-${{ github.sha }}"
-        gh api -H "Authorization: token $GH_PAT" \
-          -X POST \
-          -F "title=${pr_title}" \
-          -F "body=${pr_body}" \
-          -F "head=${head_branch}" \
-          -F "base=${base_branch}" \
-          https://api.github.com/repos/${{ github.repository }}/pulls
+        echo "${GH_PAT}" | gh auth login --with-token
+        gh pr create --title "${pr_title}" --body "${pr_body}" --head "${head_branch}" --base "${base_branch}"
