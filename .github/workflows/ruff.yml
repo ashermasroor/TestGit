@@ -5,17 +5,21 @@ on: push
 jobs:
   lint:
     runs-on: ubuntu-latest 
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: actions/setup-python@v2
       with:
-        python-version: '3.x'  # Explicitly specify Python version
+        python-version: '3.9'  # Explicitly specify Python version
     - name: Install Ruff
       run: pip install ruff  # Ensure Ruff is installed in the environment
     - name: Run Ruff Linter
       run: ruff check --fix .  # Use ruff directly with the correct command
     - name: commit changes
-    if: github.ref == 'refs/heads/Dev-pull'  # Only commit to main branch
+      if: github.ref == 'refs/heads/Dev-pull'  # Only commit to main branch
       run: |
         git config user.name 'Your Name'
         git config user.email 'your-email@example.com'
