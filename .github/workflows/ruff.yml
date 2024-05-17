@@ -15,8 +15,6 @@ jobs:
     - uses: actions/setup-python@v4
       with:
         python-version: '3.9'
-    - name: Install GitHub CLI
-      run: sudo apt-get install gh
     - name: Install Ruff
       run: pip install ruff
     - name: Run Ruff Linter
@@ -33,6 +31,8 @@ jobs:
         git add -A
         git commit -m "Apply automatic RUFF fixes"
         git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git lint-fixes-${{ github.sha }}
+    - name: Install GitHub CLI
+      run: sudo apt-get install -y gh
     - name: Create pull request
       env:
         GH_PAT: ${{ secrets.GH_PAT }}
