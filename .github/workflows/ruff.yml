@@ -1,4 +1,4 @@
-name: Lint and Create PR
+name: Lint and Push to Dev-Pull
 
 on: push
 
@@ -9,7 +9,6 @@ jobs:
       contents: read
       packages: read
       statuses: write
-      pull-requests: write
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -28,26 +27,13 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan github.com >> ~/.ssh/known_hosts
-    - name: Create and push branch
+    - name: Push changes to Dev-Pull
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_EMAIL: ${{ github.event.pusher.email || 'default-email@example.com' }}
       run: |
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_EMAIL}"
-        git checkout -b lint-fixes-${{ github.sha }}
         git add -A
         git commit -m "Apply automatic RUFF fixes"
-        git push git@github.com:${{ github.repository }}.git lint-fixes-${{ github.sha }}
-    - name: Install GitHub CLI
-      run: sudo apt-get install -y gh
-    - name: Create pull request
-      env:
-        GH_PAT: ${{ secrets.GH_PAT }}
-      run: |
-        pr_title="Apply automatic RUFF fixes"
-        pr_body="This pull request applies automatic fixes from the Ruff linter."
-        base_branch="Dev-Pull"
-        head_branch="lint-fixes-${{ github.sha }}"
-        echo "${GH_PAT}" | gh auth login --with-token
-        gh pr create --title "${pr_title}" --body "${pr_body}" --head "${head_branch}" --base "${base_branch}"
+        git push git@github.com:${{ github.repository }}.git Dev-Pull
