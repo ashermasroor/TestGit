@@ -1,0 +1,2 @@
+script.py:493:11: F811 Redefinition of unused `rag4` from line 309
+Found 1 error.
