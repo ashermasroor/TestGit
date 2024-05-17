@@ -26,6 +26,8 @@ jobs:
         ruff check --fix . 2>&1 | tee .github/workflows/ruff_output.txt
     - name: Print Ruff Linter Errors
       run: cat .github/workflows/ruff_output.txt
+    - name: Print Changes Made by Ruff
+      run: git diff
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
