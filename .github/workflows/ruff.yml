@@ -1,6 +1,9 @@
 name: Lint and Push to Dev-Pull
 
-on: push
+on:
+  push:
+    paths:
+      - '**/*.py'  # Only trigger on Python file changes
 
 jobs:
   lint:
@@ -33,7 +36,6 @@ jobs:
         else
           git diff >> .github/workflows/ruff_output.txt
           echo "no_changes=false" >> $GITHUB_ENV
-        fi
     - name: Print Ruff Linter Output
       run: cat .github/workflows/ruff_output.txt
     - name: Setup SSH
@@ -42,14 +44,27 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan github.com >> ~/.ssh/known_hosts
-    - name: Push changes to Dev-Pull
+    - name: Push changes to lint-fixes branch
       if: env.no_changes == 'false'
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_EMAIL: ${{ github.event.pusher.email || 'default-email@example.com' }}
+        LINT_BRANCH: lint-fixes-${{ github.sha }}
       run: |
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_EMAIL}"
+        git checkout -b $LINT_BRANCH
         git add -A
         git commit -m "Apply automatic RUFF fixes"
-        git push git@github.com:${{ github.repository }}.git Dev-Pull
+        git push git@github.com:${{ github.repository }}.git $LINT_BRANCH
+    - name: Create Pull Request
+      if: env.no_changes == 'false'
+      uses: peter-evans/create-pull-request@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: Apply automatic RUFF fixes
+        branch: ${{ env.LINT_BRANCH }}
+        delete-branch: true
+        base: Dev-Pull
+        title: Apply automatic RUFF fixes
+        body: This pull request applies automatic fixes from the Ruff linter.
