@@ -1,64 +1,71 @@
 All checks passed!
 diff --git a/.github/workflows/ruff_output.txt b/.github/workflows/ruff_output.txt
-index 66f386a..1f5f344 100644
+index db80955..1f5f344 100644
 --- a/.github/workflows/ruff_output.txt
 +++ b/.github/workflows/ruff_output.txt
-@@ -1,60 +1 @@
+@@ -1,67 +1 @@
  All checks passed!
 -diff --git a/.github/workflows/ruff_output.txt b/.github/workflows/ruff_output.txt
--index 9a19c0b..1f5f344 100644
+-index 66f386a..1f5f344 100644
 ---- a/.github/workflows/ruff_output.txt
 -+++ b/.github/workflows/ruff_output.txt
--@@ -1,53 +1 @@
+-@@ -1,60 +1 @@
 - All checks passed!
 --diff --git a/.github/workflows/ruff_output.txt b/.github/workflows/ruff_output.txt
---index c9d6fb0..1f5f344 100644
+--index 9a19c0b..1f5f344 100644
 ----- a/.github/workflows/ruff_output.txt
 --+++ b/.github/workflows/ruff_output.txt
---@@ -1,46 +1 @@
+--@@ -1,53 +1 @@
 -- All checks passed!
 ---diff --git a/.github/workflows/ruff_output.txt b/.github/workflows/ruff_output.txt
----index 86e1627..1f5f344 100644
+---index c9d6fb0..1f5f344 100644
 ------ a/.github/workflows/ruff_output.txt
 ---+++ b/.github/workflows/ruff_output.txt
----@@ -1,39 +1 @@
+---@@ -1,46 +1 @@
 --- All checks passed!
 ----diff --git a/.github/workflows/ruff_output.txt b/.github/workflows/ruff_output.txt
-----index d1e4d78..1f5f344 100644
+----index 86e1627..1f5f344 100644
 ------- a/.github/workflows/ruff_output.txt
 ----+++ b/.github/workflows/ruff_output.txt
-----@@ -1,32 +1 @@
+----@@ -1,39 +1 @@
 ---- All checks passed!
 -----diff --git a/.github/workflows/ruff_output.txt b/.github/workflows/ruff_output.txt
------index 9141f91..1f5f344 100644
+-----index d1e4d78..1f5f344 100644
 -------- a/.github/workflows/ruff_output.txt
 -----+++ b/.github/workflows/ruff_output.txt
------@@ -1,24 +1 @@
-------Found 1 error (1 fixed, 0 remaining).
+-----@@ -1,32 +1 @@
+----- All checks passed!
 ------diff --git a/.github/workflows/ruff_output.txt b/.github/workflows/ruff_output.txt
-------index 1f5f344..0abcfaf 100644
+------index 9141f91..1f5f344 100644
 --------- a/.github/workflows/ruff_output.txt
 ------+++ b/.github/workflows/ruff_output.txt
-------@@ -1 +1 @@
--------All checks passed!
-------+Found 1 error (1 fixed, 0 remaining).
-------diff --git a/script.py b/script.py
-------index b76bef0..da690c2 100644
---------- a/script.py
-------+++ b/script.py
-------@@ -12,7 +12,9 @@ from fastapi.requests import Request
------- 
------- from pydantic import BaseModel, Field
------- from typing import List
--------import os,re,requests
-------+import os
-------+import re
-------+import requests
------- 
------- 
------- class RAGLlm(BaseModel):
+------@@ -1,24 +1 @@
+-------Found 1 error (1 fixed, 0 remaining).
+-------diff --git a/.github/workflows/ruff_output.txt b/.github/workflows/ruff_output.txt
+-------index 1f5f344..0abcfaf 100644
+---------- a/.github/workflows/ruff_output.txt
+-------+++ b/.github/workflows/ruff_output.txt
+-------@@ -1 +1 @@
+--------All checks passed!
+-------+Found 1 error (1 fixed, 0 remaining).
+-------diff --git a/script.py b/script.py
+-------index b76bef0..da690c2 100644
+---------- a/script.py
+-------+++ b/script.py
+-------@@ -12,7 +12,9 @@ from fastapi.requests import Request
+------- 
+------- from pydantic import BaseModel, Field
+------- from typing import List
+--------import os,re,requests
+-------+import os
+-------+import re
+-------+import requests
+------- 
+------- 
+------- class RAGLlm(BaseModel):
+-------Changes detected.
+------+All checks passed!
 ------Changes detected.
------+All checks passed!
 -----Changes detected.
 ----Changes detected.
 ---Changes detected.
