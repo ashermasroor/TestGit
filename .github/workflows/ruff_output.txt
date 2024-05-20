@@ -1,3 +1,1 @@
-error: Failed to parse script.py:15:1: Unexpected indentation
-script.py:15:1: E999 SyntaxError: Unexpected indentation
-Found 1 error.
+Found 1 error (1 fixed, 0 remaining).
