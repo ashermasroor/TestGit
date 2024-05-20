@@ -24,26 +24,24 @@ jobs:
       run: |
         mkdir -p .github/workflows
         ruff check --fix . 2>&1 | tee .github/workflows/ruff_output.txt
-    - name: Print Ruff Linter Errors
+    - name: Check for changes
+      id: check_changes
+      run: |
+        if [ -z "$(git status --porcelain)" ]; then
+          echo "All checks passed" >> .github/workflows/ruff_output.txt
+          echo "no_changes=true" >> $GITHUB_ENV
+        else
+          git diff >> .github/workflows/ruff_output.txt
+          echo "no_changes=false" >> $GITHUB_ENV
+        fi
+    - name: Print Ruff Linter Output
       run: cat .github/workflows/ruff_output.txt
-    - name: Print Changes Made by Ruff
-      run: git diff
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan github.com >> ~/.ssh/known_hosts
-    - name: Check for changes
-      id: check_changes
-      run: |
-        if [ -z "$(git status --porcelain)" ]; then
-          echo "No changes to commit."
-          echo "no_changes=true" >> $GITHUB_ENV
-        else
-          echo "Changes detected."
-          echo "no_changes=false" >> $GITHUB_ENV
-        fi
     - name: Push changes to Dev-Pull
       if: env.no_changes == 'false'
       env:
