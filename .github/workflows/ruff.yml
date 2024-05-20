@@ -1,3 +1,7 @@
+name: Lint and Push to Dev-Pull
+
+on: push
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -27,7 +31,10 @@ jobs:
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
-	@@ -38,10 +37,10 @@ jobs:
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+    - name: Check for changes
       id: check_changes
       run: |
         if [ -z "$(git status --porcelain)" ]; then
