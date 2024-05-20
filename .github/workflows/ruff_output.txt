@@ -1,22 +1,47 @@
-All checks passed!
+script.py:493:11: F811 Redefinition of unused `rag4` from line 309
+Found 3 errors (2 fixed, 1 remaining).
 diff --git a/.github/workflows/ruff_output.txt b/.github/workflows/ruff_output.txt
-index a10b9b2..1f5f344 100644
+index 1ca0e6c..1e204e1 100644
 --- a/.github/workflows/ruff_output.txt
 +++ b/.github/workflows/ruff_output.txt
-@@ -1,15 +1 @@
--Found 1 error (1 fixed, 0 remaining).
--diff --git a/script.py b/script.py
--index aa3c56f..9fe4c8a 100644
----- a/script.py
--+++ b/script.py
--@@ -12,7 +12,8 @@ from fastapi.requests import Request
-- 
-- from pydantic import BaseModel, Field
-- from typing import List
---import os,re
--+import os
--+import re
-- import requests
-- 
-- 
-+All checks passed!
+@@ -1,22 +1,2 @@
+-All checks passed!
+-diff --git a/.github/workflows/ruff_output.txt b/.github/workflows/ruff_output.txt
+-index a10b9b2..1f5f344 100644
+---- a/.github/workflows/ruff_output.txt
+-+++ b/.github/workflows/ruff_output.txt
+-@@ -1,15 +1 @@
+--Found 1 error (1 fixed, 0 remaining).
+--diff --git a/script.py b/script.py
+--index aa3c56f..9fe4c8a 100644
+----- a/script.py
+--+++ b/script.py
+--@@ -12,7 +12,8 @@ from fastapi.requests import Request
+-- 
+-- from pydantic import BaseModel, Field
+-- from typing import List
+---import os,re
+--+import os
+--+import re
+-- import requests
+-- 
+-- 
+-+All checks passed!
++script.py:493:11: F811 Redefinition of unused `rag4` from line 309
++Found 3 errors (2 fixed, 1 remaining).
+diff --git a/script.py b/script.py
+index 609414e..5ada94c 100644
+--- a/script.py
++++ b/script.py
+@@ -12,8 +12,9 @@ from fastapi.requests import Request
+ from fastapi.openapi.docs import get_swagger_ui_html
+ 
+ from pydantic import BaseModel, Field
+-import shutil
+-import os, re, requests
++import os
++import re
++import requests
+ 
+ from bs4 import BeautifulSoup
+ 

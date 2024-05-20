@@ -12,8 +12,9 @@ from fastapi.requests import Request
 from fastapi.openapi.docs import get_swagger_ui_html
 
 from pydantic import BaseModel, Field
-import shutil
-import os, re, requests
+import os
+import re
+import requests
 
 from bs4 import BeautifulSoup
 
