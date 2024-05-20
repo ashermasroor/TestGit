@@ -12,9 +12,8 @@ from fastapi.requests import Request
 
 from pydantic import BaseModel, Field
 from typing import List
-import os
-import re
-import requests
+import os,re,requests
+
 
 
 class RAGLlm(BaseModel):
